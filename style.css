@@ -1,0 +1,962 @@
+/* ==========================================================================
+   TABLE DES MATIÈRES
+   ==========================================================================
+   1. Variables et Styles de Base (Reset, Typo, Couleurs)
+   2. Classes Utilitaires (Container, Boutons)
+   3. Header et Navigation Principale
+   4. Menu Mobile
+   5. Section Hero
+   6. Styles Généraux des Sections
+   7. Section À Propos
+   8. Section Services (Soins)
+   9. Section Témoignages (Galerie)
+  10. Section Blog
+  11. Section Tarifs
+  12. Section FAQ (Foire Aux Questions)
+  13. Section Contact (Formulaire et Infos)
+  14. Footer (Pied de page)
+  15. Bouton "Retour en Haut"
+  16. Animations et Effets
+  17. Media Queries (Design Adaptatif)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Variables et Styles de Base
+   ========================================================================== */
+
+:root {
+    --primary-color: #5d7a68; /* Vert sauge doux */
+    --secondary-color: #c4a98a; /* Beige doré */
+    --accent-color: #a48970; /* Brun clair */
+    --background-color: #fdfaf6; /* Blanc cassé très clair */
+    --light-gray-color: #f1ede9; /* Gris beige clair */
+    --text-color: #3f3d3b; /* Gris anthracite */
+    --heading-color: #4a4846;
+    --white-color: #ffffff;
+    --font-family-headings: 'Cormorant Garamond', serif;
+    --font-family-body: 'Lato', sans-serif;
+    --header-height: 80px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --transition-speed: 0.3s ease;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family-body);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-headings);
+    color: var(--heading-color);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
+p { margin-bottom: 1rem; }
+a { color: var(--primary-color); text-decoration: none; transition: color var(--transition-speed); }
+a:hover { color: var(--secondary-color); }
+ul { list-style: none; }
+img { max-width: 100%; height: auto; display: block; }
+
+
+/* ==========================================================================
+   2. Classes Utilitaires
+   ========================================================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border-color: var(--secondary-color);
+}
+.btn-secondary:hover {
+    background-color: transparent;
+    color: var(--secondary-color);
+}
+
+/* ==========================================================================
+   3. Header et Navigation Principale
+   ========================================================================== */
+
+#header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: transparent;
+    height: var(--header-height);
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+#header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--box-shadow);
+    backdrop-filter: blur(5px);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.logo {
+    font-family: var(--font-family-headings);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--heading-color);
+}
+.scrolled .logo {
+    color: var(--heading-color);
+}
+
+.main-nav .nav-list {
+    display: flex;
+    gap: 2rem;
+}
+
+.main-nav a {
+    position: relative;
+    padding: 0.5rem 0;
+    font-weight: 400;
+    color: var(--text-color);
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--transition-speed);
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--heading-color);
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   4. Menu Mobile
+   ========================================================================== */
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Start off-screen */
+    width: 80%;
+    max-width: 320px;
+    height: 100%;
+    background-color: var(--background-color);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.mobile-menu.open {
+    right: 0;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.mobile-nav-list {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.mobile-nav-list li {
+    margin-bottom: 1.5rem;
+}
+
+.mobile-nav-list a {
+    font-family: var(--font-family-headings);
+    font-size: 1.8rem;
+    color: var(--heading-color);
+}
+
+.btn-mobile-menu {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   5. Section Hero
+   ========================================================================== */
+
+#hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white-color);
+    background: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1800&q=80') no-repeat center center/cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(63, 61, 59, 0.4); /* Overlay pour la lisibilité */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+}
+
+#hero h1 {
+    color: var(--white-color);
+    font-size: 4.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+#hero p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+}
+
+/* ==========================================================================
+   6. Styles Généraux des Sections
+   ========================================================================== */
+
+section {
+    padding: 6rem 0;
+}
+
+section:nth-of-type(odd) {
+    background-color: var(--light-gray-color);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title h2 {
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+.section-title p {
+    font-size: 1.1rem;
+    color: #888;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   7. Section À Propos
+   ========================================================================== */
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-image img {
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-text h3 {
+    margin-top: 0;
+}
+
+.about-signature {
+    font-family: 'Brush Script MT', 'Brush Script Std', cursive;
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-top: 1.5rem;
+    text-align: right;
+}
+
+
+/* ==========================================================================
+   8. Section Services (Soins)
+   ========================================================================== */
+#services {
+    background-color: var(--background-color);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+.service-card {
+    background: var(--white-color);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.service-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.service-card h3 {
+    margin-bottom: 1rem;
+}
+.service-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   9. Section Témoignages (Galerie)
+   ========================================================================== */
+.testimonial-slider {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.testimonial-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.testimonial-slide {
+    flex: 0 0 100%;
+    padding: 2rem;
+    background: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+}
+
+.testimonial-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.5rem auto;
+    border: 4px solid var(--secondary-color);
+}
+
+.testimonial-slide blockquote p {
+    font-family: var(--font-family-headings);
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.testimonial-slide footer {
+    font-weight: 700;
+}
+
+.testimonial-slide footer cite {
+    display: block;
+    font-style: normal;
+    color: var(--primary-color);
+}
+
+.testimonial-slide footer span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #888;
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    padding: 0 1rem;
+}
+
+.slider-btn {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all var(--transition-speed);
+}
+.slider-btn:hover {
+    background-color: var(--white-color);
+    color: var(--primary-color);
+}
+
+.slider-dots {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+.dot.active {
+    background-color: var(--primary-color);
+}
+
+/* ==========================================================================
+   10. Section Blog
+   ========================================================================== */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.blog-post-card {
+    background: var(--white-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+.blog-post-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+.blog-post-card a {
+    color: var(--text-color);
+}
+
+.blog-post-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.blog-post-content {
+    padding: 1.5rem;
+}
+.blog-post-category {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: var(--light-gray-color);
+    color: var(--secondary-color);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.blog-post-content h3 {
+    font-size: 1.3rem;
+}
+
+.blog-post-content p {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.read-more {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.read-more i {
+    margin-left: 0.5rem;
+    transition: transform var(--transition-speed);
+}
+.blog-post-card:hover .read-more i {
+    transform: translateX(5px);
+}
+
+/* ==========================================================================
+   11. Section Tarifs
+   ========================================================================== */
+#tarifs {
+    background-color: var(--background-color);
+}
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.pricing-card {
+    background: var(--white-color);
+    padding: 2.5rem;
+    text-align: center;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--light-gray-color);
+    transition: all var(--transition-speed);
+}
+
+.pricing-card.popular {
+    border-color: var(--secondary-color);
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(196, 169, 138, 0.3);
+}
+
+.pricing-card h3 {
+    font-size: 1.5rem;
+}
+.price {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: var(--font-family-headings);
+    color: var(--primary-color);
+    margin: 1rem 0 0.5rem 0;
+}
+.duration {
+    color: #888;
+    margin-bottom: 1.5rem;
+}
+.pricing-card ul {
+    text-align: left;
+    margin: 2rem 0;
+}
+.pricing-card ul li {
+    margin-bottom: 0.75rem;
+}
+.pricing-card ul li i {
+    color: var(--primary-color);
+    margin-right: 0.75rem;
+}
+.pricing-card .btn {
+    width: 100%;
+}
+.payment-info {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* ==========================================================================
+   12. Section FAQ
+   ========================================================================== */
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.faq-item {
+    background: var(--white-color);
+    border: 1px solid var(--light-gray-color);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+.faq-question {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--heading-color);
+}
+.faq-question i {
+    transition: transform var(--transition-speed);
+}
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+    color: var(--primary-color);
+}
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+}
+.faq-answer p {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* ==========================================================================
+   13. Section Contact
+   ========================================================================== */
+#contact {
+    background-color: var(--background-color);
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    background: var(--white-color);
+    padding: 4rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+.contact-form-container h3, .contact-info-container h3 {
+    margin-top: 0;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+}
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group .error-message {
+    color: #d9534f;
+    font-size: 0.8rem;
+    display: none;
+}
+.form-group.error input, .form-group.error textarea {
+    border-color: #d9534f;
+}
+.form-group.error .error-message {
+    display: block;
+}
+
+#form-feedback {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    display: none;
+}
+#form-feedback.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+    display: block;
+}
+#form-feedback.error {
+    background-color: #f2dede;
+    color: #a94442;
+    display: block;
+}
+
+
+.contact-details li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+.contact-details i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-right: 1.5rem;
+    margin-top: 0.25rem;
+    width: 20px;
+    text-align: center;
+}
+
+.map-container {
+    margin-top: 2rem;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   14. Footer
+   ========================================================================== */
+footer {
+    background-color: var(--heading-color);
+    color: rgba(255, 255, 255, 0.8);
+    padding-top: 4rem;
+}
+.footer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 4rem;
+}
+.footer-container h4 {
+    color: var(--white-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+.footer-about p {
+    line-height: 1.8;
+}
+.footer-links ul li {
+    margin-bottom: 0.75rem;
+}
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+}
+.footer-links a:hover {
+    color: var(--white-color);
+    padding-left: 5px;
+}
+.social-icons a {
+    color: var(--white-color);
+    font-size: 1.2rem;
+    margin-right: 1.5rem;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all var(--transition-speed);
+}
+.social-icons a:hover {
+    background-color: var(--white-color);
+    color: var(--heading-color);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+}
+.footer-bottom p {
+    margin: 0;
+}
+
+/* ==========================================================================
+   15. Bouton "Retour en Haut"
+   ========================================================================== */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    box-shadow: var(--box-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed), visibility var(--transition-speed), transform var(--transition-speed);
+    transform: translateY(20px);
+}
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.back-to-top:hover {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+/* ==========================================================================
+   16. Animations et Effets
+   ========================================================================== */
+.animate-on-load {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.animate-on-load:nth-child(1) { animation-name: fadeInUp; animation-delay: 0.2s; }
+.animate-on-load:nth-child(2) { animation-name: fadeInUp; animation-delay: 0.4s; }
+.animate-on-load:nth-child(3) { animation-name: fadeInUp; animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   17. Media Queries (Design Adaptatif)
+   ========================================================================== */
+
+/* Tablettes et petits ordinateurs portables */
+@media (max-width: 992px) {
+    .main-nav, .btn-header { display: none; }
+    .hamburger { display: block; }
+    .about-content { grid-template-columns: 1fr; gap: 2rem; }
+    .about-image { max-width: 400px; margin: 0 auto 2rem auto; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-container { grid-template-columns: 1fr; text-align: center; }
+    .footer-about, .footer-links, .footer-social { margin: 0 auto; max-width: 400px; }
+    .social-icons { justify-content: center; }
+}
+
+/* Mobiles */
+@media (max-width: 768px) {
+    html { font-size: 15px; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    #hero h1 { font-size: 3rem; }
+    #hero p { font-size: 1.2rem; }
+    section { padding: 4rem 0; }
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    .pricing-card.popular {
+        transform: scale(1); /* Reset popular card scaling on mobile */
+    }
+    .contact-grid { padding: 2rem; }
+    .slider-controls { display: none; } /* On cache les flèches sur mobile, on se fie au swipe */
+}
+
+/* Petits Mobiles */
+@media (max-width: 480px) {
+    .container { padding: 0 1rem; }
+    #hero h1 { font-size: 2.5rem; }
+    #hero p { font-size: 1.1rem; }
+    .btn { padding: 0.7rem 1.5rem; }
+    .footer-container { gap: 2rem; }
+    .back-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
